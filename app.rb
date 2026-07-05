@@ -41,7 +41,11 @@ class WordGuesserApp < Sinatra::Base
   post '/guess' do
     char = params[:guess].to_s[0]
     ### YOUR CODE HERE ###
-    @game.guess(char)
+    begin
+      @game.guess(char)
+    rescue ArgumentError
+      flash[:message] = "Invalid guess"
+    end
     redirect '/show'
   end
 
